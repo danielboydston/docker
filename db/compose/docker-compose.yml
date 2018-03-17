@@ -10,10 +10,13 @@ services:
             MYSQL_ROOT_PASSWORD: example
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
-        network: traefik-net
+        depends_on:
+            - mariadb
+        networks:
+            - traefik-net
         deploy:
             restart_policy:
-                condition: on-failure
+                condition: any
             labels:
                 - traefik.port=8080
                 - traefik.frontend.rule=Host:phpmyadmin.airwarrior.net
