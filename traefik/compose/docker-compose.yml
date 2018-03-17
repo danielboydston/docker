@@ -28,8 +28,8 @@ services:
         command:
             - --web
             - --docker
-            - --docker.swarmmode
-            - --docker.domain=alyrica.net
+#            - --docker.swarmmode
+            - --docker.domain=airwarrior.net
             - --docker.watch
             - --entrypoints=Name:http Address::80 Redirect.EntryPoint:https
             - --entrypoints=Name:https Address::443 TLS:/ssl/combined_cert.crt,/ssl/alyrica.net.key
