@@ -8,4 +8,4 @@ services:
             - 8080:8080
         deploy:
             restart_policy:
-                condition: always
+                condition: on-failure
