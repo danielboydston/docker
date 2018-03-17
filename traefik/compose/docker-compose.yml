@@ -5,7 +5,7 @@ services:
     traefik:
         image: traefik
         ports:
-            - 8080:8080
+            - 8081:8080
             - 80:80
             - 443:443
         networks:
@@ -32,7 +32,7 @@ services:
             - --docker.domain=airwarrior.net
             - --docker.watch
             - --entrypoints=Name:http Address::80 Redirect.EntryPoint:https
-            - --entrypoints=Name:https Address::443 TLS:/ssl/combined_cert.crt,/ssl/alyrica.net.key
+            - --entrypoints=Name:https Address::443 TLS:/ssl/cert.pem,/ssl/key.pem
             - --defaultentrypoints=http,https
 networks:
     traefik-net:
