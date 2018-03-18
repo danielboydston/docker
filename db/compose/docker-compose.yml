@@ -3,9 +3,7 @@ version: '3.1'
 services:
     mariadb:
         image: mariadb
-        deploy:
-            restart_policy:
-                condition: on-failure
+        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: example
     phpmyadmin:
@@ -14,12 +12,11 @@ services:
             - mariadb
         networks:
             - traefik-net
-        deploy:
-            restart_policy:
-                condition: any
-            labels:
-                - traefik.port=8080
-                - traefik.frontend.rule=Host:phpmyadmin.airwarrior.net
+        restart: always
+        labels:
+            - traefik.port=80
+            - traefik.frontend.rule=Host:phpmyadmin.airwarrior.net
+            - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
 
 networks:
     traefik-net:
