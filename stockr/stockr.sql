@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 15, 2018 at 05:27 AM
+-- Generation Time: Mar 19, 2018 at 03:40 AM
 -- Server version: 5.7.17-13
 -- PHP Version: 5.6.30-0+deb8u1
 
@@ -19,10 +19,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `stocker`
+-- Database: `stockr`
 --
-CREATE DATABASE IF NOT EXISTS `stocker` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `stocker`;
+CREATE DATABASE IF NOT EXISTS `stockr` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `stockr`;
 
 -- --------------------------------------------------------
 
@@ -35,6 +35,7 @@ CREATE TABLE `calcs` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `calculation` varchar(255) NOT NULL,
+  `comparisonID` int(11) NOT NULL,
   `active` enum('yes','no') NOT NULL DEFAULT 'yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -42,12 +43,37 @@ CREATE TABLE `calcs` (
 -- Dumping data for table `calcs`
 --
 
-INSERT INTO `calcs` (`id`, `name`, `calculation`, `active`) VALUES
-(1, 'Last Price Greater Than', '[latestPrice] > [value]', 'yes'),
-(2, 'Last Price Less Than', '[latestPrice] < [value]', 'yes'),
-(3, 'Percent Gain Greater Than', '(([latestPrice] - [costBasis]) / [costBasis]) > [value] / 100', 'yes'),
-(4, 'Percent Gain Less Than', '(([latestPrice] - [costBasis]) / [costBasis]) < [value] / 100', 'yes'),
-(5, 'Percent Gains Lost Greater Than', '([high] - [latestPrice]) / ([high] - [costBasis]) > [value] / 100', 'yes');
+INSERT INTO `calcs` (`id`, `name`, `calculation`, `comparisonID`, `active`) VALUES
+(1, 'Last Price', '[latestPrice]', 2, 'yes'),
+(2, 'Last Price', '[latestPrice]', 3, 'yes'),
+(3, 'Percent Gain', '(([latestPrice] - [costBasis]) / [costBasis]) * 100', 2, 'yes'),
+(4, 'Percent Gain', '(([latestPrice] - [costBasis]) / [costBasis]) * 100', 3, 'yes'),
+(5, 'Percent Gains Lost', '(([watchHigh] - [latestPrice]) / ([watchHigh] - [costBasis])) * 100', 2, 'yes');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comparisons`
+--
+
+DROP TABLE IF EXISTS `comparisons`;
+CREATE TABLE `comparisons` (
+  `id` int(11) NOT NULL,
+  `operator` varchar(2) NOT NULL,
+  `words` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `comparisons`
+--
+
+INSERT INTO `comparisons` (`id`, `operator`, `words`) VALUES
+(1, '==', 'Equal To'),
+(2, '>', 'Greater Than'),
+(3, '<', 'Less Than'),
+(4, '>=', 'Greater Than or Equal To'),
+(5, '<=', 'Less Than or Equal To'),
+(6, '!=', 'Not Equal To');
 
 -- --------------------------------------------------------
 
@@ -75,6 +101,7 @@ CREATE TABLE `notifications` (
   `triggerID` int(11) NOT NULL,
   `quoteID` int(11) NOT NULL,
   `notificationDate` bigint(20) NOT NULL,
+  `triggerThreshold` decimal(6,2) NOT NULL,
   `triggerValue` decimal(6,2) NOT NULL,
   `state` enum('yes','no') NOT NULL DEFAULT 'yes',
   `sentDate` bigint(20) NOT NULL,
@@ -165,7 +192,7 @@ CREATE TABLE `triggers` (
   `id` int(11) NOT NULL,
   `watchID` int(11) NOT NULL,
   `calcID` int(11) NOT NULL,
-  `value` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `threshold` decimal(6,2) NOT NULL DEFAULT '0.00',
   `prompt` enum('buy','sell','custom') NOT NULL DEFAULT 'sell',
   `customPrompt` varchar(30) NOT NULL DEFAULT '',
   `triggered` enum('yes','no') NOT NULL DEFAULT 'no',
@@ -174,6 +201,7 @@ CREATE TABLE `triggers` (
   `error` enum('yes','no') NOT NULL DEFAULT 'no',
   `error_message` varchar(255) NOT NULL,
   `lastEval` bigint(20) NOT NULL,
+  `lastValue` decimal(6,2) NOT NULL,
   `high` decimal(6,2) NOT NULL,
   `highDate` bigint(20) NOT NULL,
   `low` decimal(6,2) NOT NULL,
@@ -244,6 +272,13 @@ CREATE TABLE `watches` (
 -- Indexes for table `calcs`
 --
 ALTER TABLE `calcs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `comparisonID` (`comparisonID`);
+
+--
+-- Indexes for table `comparisons`
+--
+ALTER TABLE `comparisons`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -319,6 +354,11 @@ ALTER TABLE `watches`
 ALTER TABLE `calcs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `comparisons`
+--
+ALTER TABLE `comparisons`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
 -- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
@@ -327,7 +367,7 @@ ALTER TABLE `config`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `quoteFieldMap`
 --
@@ -337,7 +377,7 @@ ALTER TABLE `quoteFieldMap`
 -- AUTO_INCREMENT for table `quotes`
 --
 ALTER TABLE `quotes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=527;
 --
 -- AUTO_INCREMENT for table `timezones`
 --
@@ -366,6 +406,12 @@ ALTER TABLE `watches`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `calcs`
+--
+ALTER TABLE `calcs`
+  ADD CONSTRAINT `calcs_ibfk_1` FOREIGN KEY (`comparisonID`) REFERENCES `comparisons` (`id`);
 
 --
 -- Constraints for table `notifications`
