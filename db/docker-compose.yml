@@ -16,15 +16,15 @@ services:
         secrets:
             - db_root_password
 
-    adminer:
-        image: adminer
-        networks:
-            - traefik-net
-        restart: always
-        labels:
-            - traefik.port=8080
-            - traefik.frontend.rule=Host:adminer.airwarrior.net
-            - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
+#    adminer:
+#        image: adminer
+#        networks:
+#            - traefik-net
+#        restart: always
+#        labels:
+#            - traefik.port=8080
+#            - traefik.frontend.rule=Host:adminer.airwarrior.net
+#            - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
