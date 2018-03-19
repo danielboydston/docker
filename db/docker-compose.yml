@@ -26,6 +26,19 @@ services:
             - traefik.frontend.rule=Host:adminer.airwarrior.net
             - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
 
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        networks:
+            - traefik-net
+        environment:
+            - PMA_ARBITRARY=1
+        restart: always
+        volumes:
+            - /sessions
+        labels:
+            - traefik.port=80
+            - traefik.frontend.rule=Host:phpmyadmin.airwarrior.net
+            - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
 networks:
     traefik-net:
         external: true
