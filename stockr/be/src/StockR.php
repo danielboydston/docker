@@ -54,7 +54,7 @@
                                 // URL of webservice
                                 $quote_url = $config->get_option("quote_url");
                                 $url = substr_replace($quote_url, $sym['symbol'], strpos($quote_url, "@symbol"), 7);
-                                $quote = Stocker::curl_call($url, "GET");
+                                $quote = StockR::curl_call($url, "GET");
                                 if($quote['result']=='success' && $quote['response']==200) {
                                     // Save the information to the database
                                     $sql_field_string = "";

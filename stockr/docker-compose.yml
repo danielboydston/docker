@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+    be:
+        image: stockr_be:latest
+        restart: always
+        environment:
+            - DB_SERVER=db
+            - DB_DATABASE=stockr
+            - DB_USERNAME=stockr
+            - DB_PASSWORD=
+        networks:
+            - traefik-net
+
+networks:
+    traefik-net:
+        external: true

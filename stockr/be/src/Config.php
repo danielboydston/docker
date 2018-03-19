@@ -1,6 +1,5 @@
 <?php
 
-require "config.inc";
 include ("vendor/PHPMailer/PHPMailerAutoload.php");
 
 class Config {
@@ -10,9 +9,24 @@ class Config {
 
 
     public function __construct() {
-        global $mysql_server, $mysql_username, $mysql_password, $mysql_database;
+	$db_server = "";
+        if(isset($_ENV['DB_SERVER'])) {
+            $db_server=$_ENV['DB_SERVER'];
+        }
+        $db_database = "";
+        if(isset($_ENV['DB_DATABASE'])) {
+            $db_database = $_ENV['DB_DATABASE'];
+        }
+        $db_username = "";
+        if(isset($_ENV['DB_USERNAME'])) {
+            $db_username = $_ENV['DB_USERNAME'];
+        }
+        $db_password = "";
+        if(isset($_ENV['DB_PASSWORD'])) {
+            $db_password = $_ENV['DB_PASSWORD'];
+        }
         // Connect to the database
-        $this->mysqli = new mysqli($mysql_server, $mysql_username, $mysql_password, $mysql_database);
+        $this->mysqli = new mysqli($db_server, $db_username, $db_password, $db_database);
         // If connection to the database succeeded, pull the config from the database
         if($this->mysqli) {
             $sql = "SELECT id, item, value FROM config";
