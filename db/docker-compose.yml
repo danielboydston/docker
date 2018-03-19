@@ -1,0 +1,38 @@
+version: '3.1'
+
+services:
+    db:
+        image: mariadb
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
+        volumes:
+            - db_data:/var/lib/mysql
+        networks:
+            - traefik-net
+        labels:
+            - traefik.port=3306
+            - traefik.frontend.rule=Host:db.airwarrior.net
+        secrets:
+            - db_root_password
+
+    adminer:
+        image: adminer
+        networks:
+            - traefik-net
+        restart: always
+        labels:
+            - traefik.port=8080
+            - traefik.frontend.rule=Host:adminer.airwarrior.net
+            - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
+
+networks:
+    traefik-net:
+        external: true
+
+volumes:
+    db_data:
+
+secrets:
+    db_root_password:
+        file: db_root_password.secret
