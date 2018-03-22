@@ -194,20 +194,45 @@
                         }
                         $strpos++;
                     }
-                    if(strlen($calc_result)>0) {
-                        // We have a calc_result.  Evaluate the calculation
+                    $thresh=$row['threshold'];
+                    $thresh_result = "";
+                    $strpos = 0;
+                    $key = array("start"=>-1,"key"=>"");
+                    while ($strpos < strlen($thresh)) {
+                        $cur_char = substr($thresh,$strpos,1);
+                        if($cur_char=="[") {
+                            // We located a new key.  Begin recording in the key array
+                            $key['start']=$strpos;
+                        } else if($cur_char=="]") {
+                            // We located the end of a key
+                            // Locate the field referenced by the key and add it to the calc_result string
+                            $thresh_result .= $row[$key['key']];
+                            // Reset the key
+                            $key = array("start"=>-1,"key"=>"");
+                        } else if($key['start']>-1) {
+                            // We are inside a key.  Record this character as part of the current key
+                            $key['key'].=$cur_char;
+                        } else {
+                            // We are not inside a key.  Add this character to the calc_result
+                            $thresh_result.=$cur_char;
+                        }
+                        $strpos++;
+                    }
+                    if(strlen($calc_result)>0 && strlen($thresh_result)) {
+                        // We have a calc_result and thresh_result.  Evaluate the expressions.
                         // This method is dangerous if processing user input.
                         // We will sterilize it to remove any characters we don't expect.
-                        // Keep digits, parenthesis, operators
-                        $calc_result = preg_replace("/[^0-9\.\-\*\/\+\>\<\=\(\) ]/i","",$calc_result);
-                        // convert '=' to '=='
-                        //$calc_result = preg_replace("/[\=]/i","==",$calc_result);
+                        // Keep digits, parenthesis, periods, operators
+                        $calc_result = preg_replace("/[^0-9\.\-\+\*\/\(\) ]/i","",$calc_result);
+                        $thresh_result = preg_replace("/[^0-9\.\-\+\*\/\(\) ]/i","",$thresh_result);
+                        // Evaluate the calculation and threshold to their respective values.  This will be compared in the next instruction
                         $eval_str = "return ($calc_result);";
-                        // Evaluate the calculation to a value.  This will be compared to the trigger value in the next instruction
                         $calculation = eval($eval_str);
+                        $eval_str = "return ($thresh_result);";
+                        $threshold = eval($eval_str);
                         // Build the final expression
-                        $eval_str = "return (".$calculation . " " . $row['operator'] . " " . $row['threshold'] . ") ? 'true' : 'false';";
-                        // Evaluate the full expression to true or false including the calculation operator and the trigger value
+                        $eval_str = "return (".$calculation . " " . $row['operator'] . " " . $threshold . ") ? 'true' : 'false';";
+                        // Evaluate the full expression to true or false including the calculation, operator, and threshold
                         $result = eval($eval_str);
 
                         // Record the trigger as having been evaluated
@@ -236,7 +261,7 @@
                             }
                             // Create a notification for this trigger event
                             $sql = "INSERT INTO notifications (triggerID, quoteID, notificationDate, triggerThreshold, triggerValue, state, status)
-                                    VALUES (".$row['triggerID'].",".$row['id'].",". (time() * 1000) .",".$row['threshold'].",$calculation, '$triggered','new')";
+                                    VALUES (".$row['triggerID'].",".$row['id'].",". (time() * 1000).", $threshold, $calculation, '$triggered','new')";
                             $config->mysqli->query($sql);
                             if($config->mysqli->error) {
                                 $return['result']='error';
