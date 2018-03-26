@@ -33,8 +33,8 @@
                     }
 
                     //Get the list of quotes to retrieve
-                    $sql = "SELECT DISTINCT w.symbol, w.latestSource, w.latestTime, w.high, w.highDate, w.low, w.lowDate
-                            FROM watches w
+                    $sql = "SELECT DISTINCT w.symbol, w.high, w.highDate, w.low, w.lowDate, w.quoteSourceID, qs.url, q.latestSource, q.latestUpdate
+                            FROM watches w INNER JOIN quoteSources qs ON w.quoteSourceID=qs.id LEFT JOIN quotes q ON w.latestQuoteID=q.id
                             WHERE active='yes'";
                     $symbol_result = $config->mysqli->query($sql);
                     if($config->mysqli->error) {
@@ -52,14 +52,16 @@
                             // Call the webservice to get each symbol's information
                             foreach ($symbols as $sym) {
                                 // URL of webservice
-                                $quote_url = $config->get_option("quote_url");
-                                $url = substr_replace($quote_url, $sym['symbol'], strpos($quote_url, "@symbol"), 7);
+                                //$quote_url = $config->get_option("quote_url");
+                                $url = substr_replace($sym['url'], $sym['symbol'], strpos($sym['url'], "@symbol"), 7);
                                 $quote = StockR::curl_call($url, "GET");
                                 if($quote['result']=='success' && $quote['response']==200) {
                                     // Save the information to the database
-                                    $sql_field_string = "";
-                                    $sql_value_string = "";
+                                    // Insert the quote source ID into the sql strings
+                                    $sql_field_string = "quoteSourceID,";
+                                    $sql_value_string = $sym['quoteSourceID'].",";
                                     $src_fields = array_keys($quote['data']);
+                                    // Loop through all the fields in the quote map and replace field names with values from the quote 
                                     foreach($src_fields as $field) {
                                         $map_index = array_search($field, $remote_fields);
                                         if($map_index!==false) {
@@ -80,20 +82,24 @@
                                     }
 
                                     // Only record the quote if the previous latestSource and current latestSource do not equal "Close" and the last quote was over 20 hours ago
-                                    if(!($sym['latestSource']=='Close' && $quote['data'][$fieldMap['latestSource']]=='Close' && ($sym['latestTime'] + 72000000) >= (time() * 1000))) {
+                                    if(!($sym['latestSource']=='Close' && $quote['data'][$fieldMap['latestSource']]=='Close' && ($sym['latestUpdate'] + 72000000) >= (time() * 1000))) {
                                         $sql_string = "INSERT INTO quotes ($sql_field_string) VALUES ($sql_value_string)";
                                         $config->mysqli->query($sql_string);
                                         if($config->mysqli->error) {
                                             $return['result']="error";
                                             array_push($return['errors'], "Unable to save quote: ".$config->mysqli->error." SQL: $sql_string");
+                                        } else {
+                                            $quoteInsertID=$config->mysqli->insert_id
                                         }
-                                        // Record the latestSource value on the watch record
-                                        $sql = "UPDATE watches SET latestSource='".$quote['data'][$fieldMap['latestSource']]."', latestTime=".$quote['data'][$fieldMap['latestUpdate']]."
+                                        // Record the latestQuoteID on the watch record
+                                        //$sql = "UPDATE watches SET latestSource='".$quote['data'][$fieldMap['latestSource']]."', latestTime=".$quote['data'][$fieldMap['latestUpdate']]."
+                                        //        WHERE symbol='".$sym['symbol']."'";
+                                        $sql = "UPDATE watches SET latestQuoteID=$quoteInsertID
                                                 WHERE symbol='".$sym['symbol']."'";
                                         $config->mysqli->query($sql);
                                         if($config->mysqli->error) {
                                             $return['result']="error";
-                                            array_push($return['errors'], "Unable to update watch latest source: ".$config->mysqli->error." SQL: $sql");
+                                            array_push($return['errors'], "Unable to update watch latest quote: ".$config->mysqli->error." SQL: $sql");
                                         }
 
                                         // Update watch high and low stats
