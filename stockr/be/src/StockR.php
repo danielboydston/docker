@@ -61,7 +61,7 @@
                                     $sql_field_string = "quoteSourceID,";
                                     $sql_value_string = $sym['quoteSourceID'].",";
                                     $src_fields = array_keys($quote['data']);
-                                    // Loop through all the fields in the quote map and replace field names with values from the quote 
+                                    // Loop through all the fields in the quote map and replace field names with values from the quote
                                     foreach($src_fields as $field) {
                                         $map_index = array_search($field, $remote_fields);
                                         if($map_index!==false) {
@@ -89,7 +89,7 @@
                                             $return['result']="error";
                                             array_push($return['errors'], "Unable to save quote: ".$config->mysqli->error." SQL: $sql_string");
                                         } else {
-                                            $quoteInsertID=$config->mysqli->insert_id
+                                            $quoteInsertID=$config->mysqli->insert_id;
                                         }
                                         // Record the latestQuoteID on the watch record
                                         //$sql = "UPDATE watches SET latestSource='".$quote['data'][$fieldMap['latestSource']]."', latestTime=".$quote['data'][$fieldMap['latestUpdate']]."
