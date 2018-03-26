@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 4.7.9
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 19, 2018 at 03:40 AM
--- Server version: 5.7.17-13
--- PHP Version: 5.6.30-0+deb8u1
+-- Host: db
+-- Generation Time: Mar 26, 2018 at 01:04 AM
+-- Server version: 10.2.13-MariaDB-10.2.13+maria~jessie
+-- PHP Version: 7.2.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -100,12 +100,12 @@ CREATE TABLE `notifications` (
   `id` int(11) NOT NULL,
   `triggerID` int(11) NOT NULL,
   `quoteID` int(11) NOT NULL,
-  `notificationDate` bigint(20) NOT NULL,
-  `triggerThreshold` decimal(6,2) NOT NULL,
-  `triggerValue` decimal(6,2) NOT NULL,
+  `notificationDate` bigint(20) NOT NULL DEFAULT 0,
+  `triggerThreshold` decimal(6,2) NOT NULL DEFAULT 0.00,
+  `triggerValue` decimal(6,2) NOT NULL DEFAULT 0.00,
   `state` enum('yes','no') NOT NULL DEFAULT 'yes',
-  `sentDate` bigint(20) NOT NULL,
-  `status` enum('new','sent') NOT NULL
+  `sentDate` bigint(20) NOT NULL DEFAULT 0,
+  `status` enum('new','sent') NOT NULL DEFAULT 'new'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -117,6 +117,7 @@ CREATE TABLE `notifications` (
 DROP TABLE IF EXISTS `quoteFieldMap`;
 CREATE TABLE `quoteFieldMap` (
   `id` int(11) NOT NULL,
+  `quoteSourceID` int(11) NOT NULL,
   `remote` varchar(50) NOT NULL,
   `local` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -130,6 +131,7 @@ CREATE TABLE `quoteFieldMap` (
 DROP TABLE IF EXISTS `quotes`;
 CREATE TABLE `quotes` (
   `id` int(11) NOT NULL,
+  `quoteSourceID` int(11) NOT NULL,
   `symbol` varchar(10) NOT NULL,
   `companyName` varchar(255) DEFAULT NULL,
   `primaryExchange` varchar(30) DEFAULT NULL,
@@ -162,11 +164,25 @@ CREATE TABLE `quotes` (
   `iexAskPrice` decimal(6,2) DEFAULT NULL,
   `iexAskSize` decimal(6,2) DEFAULT NULL,
   `marketCap` bigint(20) DEFAULT NULL,
-  `peRatio` decimal(5,4) DEFAULT NULL,
+  `peRatio` decimal(6,2) DEFAULT NULL,
   `week52High` decimal(6,2) DEFAULT NULL,
   `week52Low` decimal(6,2) DEFAULT NULL,
   `ytdChange` decimal(5,4) DEFAULT NULL,
   `status` enum('new','processed') NOT NULL DEFAULT 'new'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `quoteSources`
+--
+
+DROP TABLE IF EXISTS `quoteSources`;
+CREATE TABLE `quoteSources` (
+  `id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  `active` enum('yes','no') NOT NULL DEFAULT 'yes'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -192,7 +208,7 @@ CREATE TABLE `triggers` (
   `id` int(11) NOT NULL,
   `watchID` int(11) NOT NULL,
   `calcID` int(11) NOT NULL,
-  `threshold` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `threshold` varchar(50) NOT NULL,
   `prompt` enum('buy','sell','custom') NOT NULL DEFAULT 'sell',
   `customPrompt` varchar(30) NOT NULL DEFAULT '',
   `triggered` enum('yes','no') NOT NULL DEFAULT 'no',
@@ -255,10 +271,12 @@ CREATE TABLE `watches` (
   `createDate` datetime NOT NULL,
   `costBasis` decimal(6,2) NOT NULL,
   `qty` decimal(6,2) NOT NULL,
-  `high` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `quoteSourceID` int(11) NOT NULL,
+  `high` decimal(6,2) NOT NULL DEFAULT 0.00,
   `highDate` bigint(20) NOT NULL,
-  `low` decimal(6,2) NOT NULL DEFAULT '0.00',
+  `low` decimal(6,2) NOT NULL DEFAULT 0.00,
   `lowDate` bigint(20) NOT NULL,
+  `latestQuoteID` int(11) NOT NULL,
   `latestSource` varchar(50) NOT NULL,
   `latestTime` bigint(20) NOT NULL,
   `active` enum('yes','no') NOT NULL DEFAULT 'yes'
@@ -299,14 +317,22 @@ ALTER TABLE `notifications`
 -- Indexes for table `quoteFieldMap`
 --
 ALTER TABLE `quoteFieldMap`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `quoteSourceID` (`quoteSourceID`);
 
 --
 -- Indexes for table `quotes`
 --
 ALTER TABLE `quotes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `symbol` (`symbol`);
+  ADD KEY `symbol` (`symbol`),
+  ADD KEY `quoteSourceID` (`quoteSourceID`);
+
+--
+-- Indexes for table `quoteSources`
+--
+ALTER TABLE `quoteSources`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `timezones`
@@ -353,56 +379,73 @@ ALTER TABLE `watches`
 --
 ALTER TABLE `calcs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- AUTO_INCREMENT for table `comparisons`
 --
 ALTER TABLE `comparisons`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
 --
 -- AUTO_INCREMENT for table `config`
 --
 ALTER TABLE `config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
 --
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+
 --
 -- AUTO_INCREMENT for table `quoteFieldMap`
 --
 ALTER TABLE `quoteFieldMap`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+
 --
 -- AUTO_INCREMENT for table `quotes`
 --
 ALTER TABLE `quotes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=527;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5340;
+
+--
+-- AUTO_INCREMENT for table `quoteSources`
+--
+ALTER TABLE `quoteSources`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `timezones`
 --
 ALTER TABLE `timezones`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `triggers`
 --
 ALTER TABLE `triggers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
 --
 -- AUTO_INCREMENT for table `userEmails`
 --
 ALTER TABLE `userEmails`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
 -- AUTO_INCREMENT for table `watches`
 --
 ALTER TABLE `watches`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
 -- Constraints for dumped tables
 --
@@ -419,6 +462,18 @@ ALTER TABLE `calcs`
 ALTER TABLE `notifications`
   ADD CONSTRAINT `notifications_ibfk_1` FOREIGN KEY (`quoteID`) REFERENCES `quotes` (`id`),
   ADD CONSTRAINT `notifications_ibfk_2` FOREIGN KEY (`triggerID`) REFERENCES `triggers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `quoteFieldMap`
+--
+ALTER TABLE `quoteFieldMap`
+  ADD CONSTRAINT `quoteFieldMap_ibfk_1` FOREIGN KEY (`quoteSourceID`) REFERENCES `quoteSources` (`id`);
+
+--
+-- Constraints for table `quotes`
+--
+ALTER TABLE `quotes`
+  ADD CONSTRAINT `quotes_ibfk_1` FOREIGN KEY (`quoteSourceID`) REFERENCES `quoteSources` (`id`);
 
 --
 -- Constraints for table `triggers`
