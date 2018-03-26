@@ -11,23 +11,23 @@
         if(is_numeric($interval)==false || $interval <= 0) {
             $interval=300;
         }
-        print(date("Y-m-d H:i:s")." getting quotes...\n");
+        print(date("Y-m-d H:i:s")." - getting quotes...\n");
         $result = StockR::getQuotes();
         if($result['result']!='success') {
             print_r($result);
         }
-        print(date("Y-m-d H:i:s")."processing triggers...\n");
+        print(date("Y-m-d H:i:s")." - processing triggers...\n");
         $result = StockR::processTriggers();
         if($result['result']!='success') {
             print_r($result);
         }
-        print(date("Y-m-d H:i:s")."sending notifications...\n");
+        print(date("Y-m-d H:i:s")." - sending notifications...\n");
         $result = StockR::sendNotifications();
         if($result['result']!='success') {
             print_r($result);
         }
 
-        print(date("Y-m-d H:i:s")."sleeping $interval seconds...\n");
+        print(date("Y-m-d H:i:s")." - sleeping $interval seconds...\n");
         sleep ($interval);
     }
 ?>
