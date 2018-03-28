@@ -58,8 +58,8 @@
                                 if($quote['result']=='success' && $quote['response']==200) {
                                     // Save the information to the database
                                     // Insert the quote source ID into the sql strings
-                                    $sql_field_string = "quoteSourceID,";
-                                    $sql_value_string = $sym['quoteSourceID'].",";
+                                    $sql_field_string = "quoteSourceID";
+                                    $sql_value_string = $sym['quoteSourceID'];
                                     $src_fields = array_keys($quote['data']);
                                     // Loop through all the fields in the quote map and replace field names with values from the quote
                                     foreach($src_fields as $field) {
