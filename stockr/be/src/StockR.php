@@ -35,7 +35,7 @@
                     //Get the list of quotes to retrieve
                     $sql = "SELECT DISTINCT w.symbol, w.high, w.highDate, w.low, w.lowDate, w.quoteSourceID, qs.url, q.latestSource, q.latestUpdate
                             FROM watches w INNER JOIN quoteSources qs ON w.quoteSourceID=qs.id LEFT JOIN quotes q ON w.latestQuoteID=q.id
-                            WHERE active='yes'";
+                            WHERE w.active='yes'";
                     $symbol_result = $config->mysqli->query($sql);
                     if($config->mysqli->error) {
                         $return['result']=="error";
