@@ -1,5 +1,6 @@
 <?php
 require_once 'API.class.php';
+require_once 'models/USER.class.php';
 class STOCKR_API extends API {
     protected $user;
 
@@ -25,7 +26,8 @@ class STOCKR_API extends API {
     protected function user($args) {
         switch ($this->method) {
             case 'GET':
-                return "GET user\n" . print_r($args);
+                $user = Models\USER::get_user($args[0]);
+                return "GET user - " . $user->firstname . " " . $user->lastname;
                 break;
             case 'POST':
                 return "New user";
