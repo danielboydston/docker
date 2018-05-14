@@ -1,8 +1,19 @@
 version: '3.1'
 
 services:
-    be:
-        image: stockr_be:latest
+    app:
+        image: stockr_app:latest
+        restart: always
+        networks:
+            - traefik-net
+        labels:
+            - traefik.port=80
+            - traefik.frontend.rule=Host:stockr.airwarrior.net
+            - traefik.frontend.auth.basic=admin:$$apr1$$LbMpDV.H$$KOhjvjaXRpztOwF9LgHCa0
+        volumes:
+            - ./app/logs:/var/log
+    service:
+        image: stockr_service:latest
         restart: always
         environment:
             - DB_SERVER=db
