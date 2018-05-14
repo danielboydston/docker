@@ -27,7 +27,7 @@ class STOCKR_API extends API {
         switch ($this->method) {
             case 'GET':
                 $user = Models\USER::get_user($args[0]);
-                return "GET user - " . $user->firstname . " " . $user->lastname;
+                return $user->to_json();
                 break;
             case 'POST':
                 return "New user";

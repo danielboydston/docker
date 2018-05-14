@@ -3,13 +3,13 @@ namespace Models;
 require_once "CONFIG.class.php";
 class USER {
     private $config;
-    public $email, $firstname, $lastname, $timezoneID, $active;
+    public $id, $email, $firstname, $lastname, $timezoneid, $active;
 
     public function __construct($user_id) {
         $config = new CONFIG();
         if($user_id > 0) {
             // Retrieve the user from the database
-            $sql = "SELECT id, email, firstName, lastName, timezoneID, active
+            $sql = "SELECT id, email, firstName, lastName, timezoneid, active
                     FROM users
                     WHERE id=?";
             if(!($stmt = $config->mysqli->prepare($sql))) {
@@ -20,22 +20,29 @@ class USER {
             if(!$success) {
                 throw new Exception("Unable to retrieve user.  Execute failed: " . $config->mysqli->error);
             }
-            $stmt->bind_result($id, $email, $firstname, $lastname, $timezoneID, $active);
+            $stmt->bind_result($id, $email, $firstname, $lastname, $timezoneid, $active);
             $stmt->fetch();
+            $this->id = $id;
             $this->email = $email;
             $this->firstname = $firstname;
             $this->lastname = $lastname;
-            $this->timezoneID = $timezoneID;
+            $this->timezoneid = $timezoneid;
             $this->active = $active;
             $stmt->close();
         } else {
+            $id="";
             $email = "";
             $firstname = "";
             $lastname = "";
-            $timezoneID = "";
+            $timezoneid = "";
             $active = "";
         }
 
+    }
+
+    public function to_json() {
+        $user = array("id"=>$this->id, "email"=>$this->email, "firstname"=>$this->firstname,"lastname"=>$this->lastname, "timezoneid"=>$this->timezoneid, "active"=>$this->active);
+        return json_encode($user);
     }
 
     public static function get_user($args) {
