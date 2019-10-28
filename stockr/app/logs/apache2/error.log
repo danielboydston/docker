@@ -1,0 +1,108 @@
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.6. Set the 'ServerName' directive globally to suppress this message
+[Mon May 14 03:46:20.850558 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 03:46:20.850669 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 03:49:45.429270 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 172.19.0.6. Set the 'ServerName' directive globally to suppress this message
+[Mon May 14 03:49:47.407150 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 03:49:47.407262 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 03:57:20.728226 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 03:57:22.744471 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 03:57:22.744595 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 03:58:56.799771 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 03:58:58.730663 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 03:58:58.730782 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 04:02:44.842376 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 04:02:46.907014 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 04:02:46.907129 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 04:11:59.935752 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 04:12:01.894998 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 04:12:01.895112 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:22:49.034094 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 05:22:50.918915 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 05:22:50.919036 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:24:17.255789 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 05:24:19.155108 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 05:24:19.155217 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:24:28.308081 2018] [core:alert] [pid 15] [client 172.19.0.2:40348] /var/www/html/api/v1/.htaccess: Invalid command 'this', perhaps misspelled or defined by a module not included in the server configuration
+[Mon May 14 05:25:28.744560 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 05:25:30.697566 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 05:25:30.697689 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:25:37.012486 2018] [core:alert] [pid 18] [client 172.19.0.2:40350] /var/www/html/.htaccess: Invalid command 'this', perhaps misspelled or defined by a module not included in the server configuration
+[Mon May 14 05:25:40.562870 2018] [core:alert] [pid 15] [client 172.19.0.2:40352] /var/www/html/.htaccess: Invalid command 'this', perhaps misspelled or defined by a module not included in the server configuration
+[Mon May 14 05:36:49.613275 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 05:36:51.493972 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 05:36:51.494090 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:37:06.804045 2018] [rewrite:trace3] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] [perdir /var/www/html/] strip per-dir prefix: /var/www/html/api/v1/user -> api/v1/user
+[Mon May 14 05:37:06.804169 2018] [rewrite:trace3] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] [perdir /var/www/html/] applying pattern 'api/v1/(.*)$' to uri 'api/v1/user'
+[Mon May 14 05:37:06.804220 2018] [rewrite:trace2] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] [perdir /var/www/html/] rewrite 'api/v1/user' -> 'api/v1/api.php?request=user'
+[Mon May 14 05:37:06.804242 2018] [rewrite:trace3] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] split uri=api/v1/api.php?request=user -> uri=api/v1/api.php, args=request=user
+[Mon May 14 05:37:06.804260 2018] [rewrite:trace3] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] [perdir /var/www/html/] add per-dir prefix: api/v1/api.php -> /var/www/html/api/v1/api.php
+[Mon May 14 05:37:06.804280 2018] [rewrite:trace2] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] [perdir /var/www/html/] strip document_root prefix: /var/www/html/api/v1/api.php -> /api/v1/api.php
+[Mon May 14 05:37:06.804298 2018] [rewrite:trace1] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbbb0a0/initial] [perdir /var/www/html/] internal redirect with /api/v1/api.php [INTERNAL REDIRECT]
+[Mon May 14 05:37:06.804492 2018] [rewrite:trace3] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbb5900/initial/redir#1] [perdir /var/www/html/] strip per-dir prefix: /var/www/html/api/v1/api.php -> api/v1/api.php
+[Mon May 14 05:37:06.804514 2018] [rewrite:trace3] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbb5900/initial/redir#1] [perdir /var/www/html/] applying pattern 'api/v1/(.*)$' to uri 'api/v1/api.php'
+[Mon May 14 05:37:06.804570 2018] [rewrite:trace1] [pid 16] mod_rewrite.c(477): [client 172.19.0.2:40382] 172.19.0.2 - - [stockr.airwarrior.net/sid#7f94fcc33d98][rid#7f94fcbb5900/initial/redir#1] [perdir /var/www/html/] pass through /var/www/html/api/v1/api.php
+[Mon May 14 05:37:06.808842 2018] [php7:notice] [pid 16] [client 172.19.0.2:40382] api.php has been hit
+[Mon May 14 05:40:24.538604 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 05:40:26.399332 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 05:40:26.399454 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:40:39.694485 2018] [php7:notice] [pid 18] [client 172.19.0.2:40384] api.php has been hit
+[Mon May 14 05:46:35.306134 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 05:46:37.171861 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 05:46:37.171976 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 05:46:43.989353 2018] [php7:notice] [pid 20] [client 172.19.0.2:40398] api.php has been hit
+[Mon May 14 05:52:42.139049 2018] [php7:notice] [pid 23] [client 172.19.0.2:40406] api.php has been hit
+[Mon May 14 07:05:23.354381 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 07:05:25.212678 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 07:05:25.212797 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 07:09:25.987729 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 07:09:27.903086 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 07:09:27.903205 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 07:09:35.948016 2018] [php7:notice] [pid 18] [client 172.19.0.2:40586] api.php has been hit
+[Mon May 14 07:14:20.434087 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 07:14:22.430379 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 07:14:22.430499 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 07:14:28.238636 2018] [php7:notice] [pid 18] [client 172.19.0.2:40594] api.php has been hit
+[Mon May 14 07:14:56.844063 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 07:14:58.797920 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 07:14:58.798045 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 07:15:03.398793 2018] [php7:notice] [pid 18] [client 172.19.0.2:40596] api.php has been hit
+[Mon May 14 07:45:49.501270 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 07:45:51.360838 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 07:45:51.360961 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 07:46:39.530462 2018] [php7:notice] [pid 18] [client 172.19.0.2:40698] api.php has been hit
+[Mon May 14 07:52:30.861958 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 07:52:32.791279 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 07:52:32.791392 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 07:52:38.327895 2018] [php7:notice] [pid 16] [client 172.19.0.2:40708] api.php has been hit
+[Mon May 14 08:01:09.816047 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 08:01:12.036669 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 08:01:12.036786 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 08:01:22.062223 2018] [php7:notice] [pid 16] [client 172.19.0.2:40736] api.php has been hit
+[Mon May 14 08:05:27.321828 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 08:05:29.271148 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 08:05:29.271271 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 08:05:37.358097 2018] [php7:notice] [pid 16] [client 172.19.0.2:40740] api.php has been hit
+[Mon May 14 08:06:07.160001 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 08:06:09.388883 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 08:06:09.389011 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 08:06:12.736355 2018] [php7:notice] [pid 17] [client 172.19.0.2:40750] api.php has been hit
+[Mon May 14 08:15:50.006105 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Mon May 14 08:15:52.058270 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon May 14 08:15:52.058393 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon May 14 08:15:58.138065 2018] [php7:notice] [pid 15] [client 172.19.0.2:40766] api.php has been hit
+[Mon May 14 08:18:09.174813 2018] [php7:notice] [pid 18] [client 172.19.0.2:40772] api.php has been hit
+[Mon May 14 08:18:31.950380 2018] [php7:notice] [pid 19] [client 172.19.0.2:40776] api.php has been hit, referer: http://stockr.airwarrior.net/api/v1/user/2
+[Mon May 14 08:20:18.246429 2018] [php7:notice] [pid 17] [client 172.19.0.2:40780] api.php has been hit
+[Mon May 14 08:22:02.594200 2018] [php7:notice] [pid 16] [client 172.19.0.2:40790] api.php has been hit
+[Mon May 14 08:22:09.442396 2018] [php7:notice] [pid 20] [client 172.19.0.2:40794] api.php has been hit
+[Mon May 14 08:22:22.776519 2018] [php7:notice] [pid 15] [client 172.19.0.2:40798] api.php has been hit
+[Sun Sep 16 20:19:14.019386 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Sun Sep 16 20:19:14.210435 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Thu Oct 25 03:35:00.041101 2018] [mpm_prefork:notice] [pid 1] AH00169: caught SIGTERM, shutting down
+[Thu Oct 25 03:35:21.112110 2018] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Thu Oct 25 03:35:21.112234 2018] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon Aug 05 00:00:59.446838 2019] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon Aug 05 00:00:59.863616 2019] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+[Mon Oct 28 03:30:49.212626 2019] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.25 (Debian) PHP/7.2.5 configured -- resuming normal operations
+[Mon Oct 28 03:30:49.236972 2019] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
